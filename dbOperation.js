@@ -237,7 +237,7 @@ getComments = async (request,res) => {
     try {
         let conn = new sql.ConnectionPool(config);
         let req = new sql.Request(conn);
-        let activityId=1;
+        let activityId=request.params.id;;
 
         let connect = await conn.connect();
         let comments = await req.query(`select * from [dbo].[Comments] where [activityId]=${activityId} order by metaCreatedAt desc`);
@@ -261,7 +261,7 @@ getLikes = async (request,res) => {
         let activityId=request.params.id;
 
         let connect = await conn.connect();
-        let likesCount = await req.query(`select likes from [dbo].[Activity] where [activityId]=${activityId} order by metaCreatedAt desc`);
+        let likesCount = await req.query(`select likes from [dbo].[Activity] where [activityId]=${activityId}`);
         console.log(likesCount);
         res.send(likesCount.recordset[0]);
 
